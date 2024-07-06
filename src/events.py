@@ -6,12 +6,16 @@ def register_events() -> None:
     sio.on("connect", connect)
     sio.on("disconnect", disconnect_user)
     sio.on("join", join)
+    sio.on("hello", hello)
+    sio.on("echo", echo)
     sio.on("message", message)
 
 
 async def validate_data(sid, data):
     if not isinstance(data, dict):
-        await sio.emit("error", f"Входящие данные должны быть корректным JSON. Полученные данные: {data}", to=sid)
+        await sio.emit(
+            "error", {"message": f"Входящие данные должны быть корректным JSON. Полученные данные: {data}"}, to=sid
+        )
         return False
     return True
 
@@ -28,6 +32,18 @@ async def join(sid, data):
     if not await validate_data(sid, data):
         return
     await sio.emit("status_update", {"status": "joined", "code": 8888}, to=sid)
+
+
+async def hello(sid, data):
+    if not await validate_data(sid, data):
+        return
+    await sio.emit("hello", data, to=sid)
+
+
+async def echo(sid, data):
+    if not await validate_data(sid, data):
+        return
+    await sio.emit("echo", data, to=sid)
 
 
 async def message(sid, data):
