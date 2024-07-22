@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Результат {{ name }}</title>
+    <meta property="og:url" content="{{ url_for('gen_image') }}?name={{ name }}&score={{ score }}"/>
     <meta property="og:title" content="Результат {{ name }}"/>
     <meta property="og:description" content="{{ name }} набрал {{ score }} из 10 баллов!"/>
     <meta property="og:image" content="{{ url_for('gen_image') }}?name={{ name }}&score={{ score }}"/>
     <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
 </head>
 <body>
-    <div class="container">
-        <img src="{{ url_for('gen_image') }}?name={{ name }}&score={{ score }}" alt="Score Image">
-    </div>
+<div class="container">
+    <img src="{{ url_for('gen_image') }}?name={{ name }}&score={{ score }}" alt="Score Image">
+</div>
 </body>
 </html>

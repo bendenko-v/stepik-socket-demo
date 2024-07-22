@@ -1,3 +1,5 @@
+import asyncio
+
 from components import sio
 
 
@@ -21,6 +23,7 @@ async def validate_data(sid, data):
 
 
 async def connect(sid, data):
+    await asyncio.sleep(1)
     await sio.emit("welcome", {"code": 7007}, to=sid)
 
 
