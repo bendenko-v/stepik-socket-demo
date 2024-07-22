@@ -22,9 +22,13 @@ async def validate_data(sid, data):
     return True
 
 
-async def connect(sid, data):
-    await asyncio.sleep(1)
+async def send_welcome(sid):
+    await asyncio.sleep(0.5)
     await sio.emit("welcome", {"code": 7007}, to=sid)
+
+
+async def connect(sid, data):
+    sio.start_background_task(send_welcome, sid)
 
 
 async def disconnect_user(sid):
