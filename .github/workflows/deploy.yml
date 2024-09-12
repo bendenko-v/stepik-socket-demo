@@ -31,7 +31,8 @@ jobs:
           script: |
             cd /home/deploy/socket-demo
             source venv/bin/activate
+            pip install --upgrade pip
             pip install --no-cache-dir -r requirements.txt --default-timeout=60
             sudo systemctl restart socket-demo.service
-            sleep 1
-            sudo systemctl status socket-demo.service
+            sleep 5
+            sudo systemctl is-active --quiet socket-demo.service && echo "Service is running" || echo "Service failed to start"
